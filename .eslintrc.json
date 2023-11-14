@@ -1,0 +1,58 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "airbnb-typescript"
+  ],
+  "rules": {
+    "react/function-component-definition": "off",
+    "arrow-body-style": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react/require-default-props": "off",
+    "import/prefer-default-export": "off",
+    "linebreak-style": "off",
+    "no-restricted-exports": "off",
+    "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "no-underscore-dangle": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/keyword-spacing": "off",
+    "class-methods-use-this": "off",
+    "max-len": "off",
+    "object-curly-newline": "off",
+    "react/prop-types": "off",
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "@/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "unknown",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ]
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "overrides": [
+
+  ]
+}

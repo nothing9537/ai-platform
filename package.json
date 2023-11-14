@@ -1,0 +1,40 @@
+{
+  "name": "ai-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "studio": "npx prisma studio",
+    "db:update": "npx concurrently \"npx prisma generate\" \"npx prisma db push\"",
+    "add:component": "npx shadcn-ui@latest add"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "autoprefixer": "10.4.16",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "eslint": "8.53.0",
+    "eslint-config-next": "14.0.2",
+    "lucide-react": "^0.292.0",
+    "next": "14.0.2",
+    "postcss": "8.4.31",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "3.3.5",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.9.0",
+    "@types/react": "18.2.37",
+    "@types/react-dom": "18.2.15",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.1.0"
+  }
+}
