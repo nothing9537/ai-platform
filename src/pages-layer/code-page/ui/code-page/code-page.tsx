@@ -1,10 +1,10 @@
 'use client';
 
 import { AxiosError } from 'axios';
-import { useCallback, type FC, useState, memo } from 'react';
+import { useCallback, type FC, useState } from 'react';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { UseFormReturn } from 'react-hook-form';
-import { MessageSquare } from 'lucide-react';
+import { Code } from 'lucide-react';
 
 import { AIRequest, AiRequestForm } from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
@@ -13,13 +13,13 @@ import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
 
-import { conversationAPI } from '../../api';
+import { codeAPI } from '../../api';
 
-interface ConversationPageProps {
+interface CodePageProps {
   className?: string;
 }
 
-export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) => {
+export const CodePage: FC<CodePageProps> = ({ className }) => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -33,7 +33,7 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
 
     const newMessages = [...messages, userMessage];
 
-    const response = await conversationAPI.sendMessage(newMessages);
+    const response = await codeAPI.sendMessage(newMessages);
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
@@ -48,15 +48,15 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
   return (
     <section className={cn('', className)}>
       <Heading
-        title="Conversation"
-        description="Our most advanced conversation model."
-        Icon={MessageSquare}
-        iconColor="text-violet-500"
-        bgColor="bg-violet-500/10"
+        title="Code Generation"
+        description="Generate code using descriptive text."
+        Icon={Code}
+        iconColor="text-green-700"
+        bgColor="bg-green-700/10"
       />
       <div className="px-4 lg:px-8">
         <AiRequestForm
-          placeholder="What is the first 20 digits of π number?"
+          placeholder="Simple modal window using React Hooks and TailwindCSS"
           callback={aiRequest}
         />
         <div className="space-y-4 mt-4">
@@ -71,7 +71,7 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
               <AiMessage
                 key={message.content as string}
                 message={{
-                  type: 'text',
+                  type: 'code',
                   content: message.content as string,
                   role: message.role as MessageRole,
                 }}
@@ -82,4 +82,4 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
       </div>
     </section>
   );
-});
+};

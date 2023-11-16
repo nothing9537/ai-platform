@@ -1,10 +1,9 @@
-'use client';
-
 import { type FC, memo, type ReactNode } from 'react';
 
 import { AIMessage } from '../../model/types/ai-message';
 import { AIMessageText } from '../ai-message-text/ai-message-text';
 import { UserMessage } from '../user-message/user-message';
+import { AIMessageCode } from '../ai-message-code/ai-message-code';
 
 interface AiMessageProps {
   className?: string;
@@ -19,6 +18,8 @@ const renderMessage = (message: AIMessage): ReactNode => {
   switch (message.type) {
     case 'text':
       return <AIMessageText content={message.content} />;
+    case 'code':
+      return <AIMessageCode content={message.content} />;
     default:
       return null;
   }

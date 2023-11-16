@@ -8,7 +8,7 @@ interface AIMessageTextProps {
 
 export const AIMessageText: FC<AIMessageTextProps> = memo(({ content }) => {
   return (
-    <div className="p-8 w-full flex items-center gap-x-8 rounded-lg bg-muted">
+    <div className="p-8 w-full flex items-start gap-x-8 rounded-lg bg-muted">
       <BotAvatar />
       <p className="text-sm">
         {content}
