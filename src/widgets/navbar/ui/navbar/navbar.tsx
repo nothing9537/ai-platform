@@ -5,6 +5,7 @@ import { Menu } from 'lucide-react';
 import { UserButton } from '@clerk/nextjs';
 
 import { MobileContentSwitcher } from '@/features/mobile-content-switcher';
+import { ThemeSwitcher } from '@/features/theme-switcher';
 import { cn } from '@/shared/lib/cn';
 
 interface NavbarProps {
@@ -21,8 +22,16 @@ export const Navbar: FC<NavbarProps> = memo(({ className, sheetContent }) => {
         contentProps={{ side: 'left' }}
         classNames={{ sheet: { content: 'p-0' } }}
       />
-      <header className="flex w-full justify-end">
-        <UserButton afterSignOutUrl="/" />
+      <header className="flex w-full justify-end items-center gap-x-4">
+        <ThemeSwitcher />
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: 'h-[48px] w-[48px]',
+            },
+          }}
+        />
       </header>
     </section>
   );

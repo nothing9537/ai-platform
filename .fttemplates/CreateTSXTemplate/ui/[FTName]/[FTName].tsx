@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, memo } from 'react';
+import { type FC, memo } from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
