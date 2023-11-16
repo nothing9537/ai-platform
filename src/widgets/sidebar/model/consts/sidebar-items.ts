@@ -1,12 +1,5 @@
 import { LayoutDashboard, MessageSquare, Image, Video, Music, Code, Settings } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-
-export interface SidebarItem {
-  label: string;
-  icon: LucideIcon;
-  href: string;
-  color?: string;
-}
+import { SidebarItem } from '../types/sidebar-item';
 
 export const SidebarItems: SidebarItem[] = [
   {
