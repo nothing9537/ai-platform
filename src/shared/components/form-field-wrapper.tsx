@@ -1,15 +1,18 @@
 'use client';
 
-import React, { ReactElement, createContext, useCallback } from 'react';
+import { type ReactElement, createContext, useCallback } from 'react';
 import { ControllerFieldState, ControllerRenderProps, FieldValues, Path, UseFormReturn, UseFormStateReturn } from 'react-hook-form';
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '../ui/form';
 import { cn } from '../lib/cn';
 
-interface FormFieldWrapperProps<T extends FieldValues> {
+interface FormFieldWrapperProps<T extends FieldValues> extends FormFieldOverviewProps {
   form: UseFormReturn<T>;
   name: Path<T>;
   children: (props: FormFieldContextProps<T>) => ReactElement;
+}
+
+export interface FormFieldOverviewProps {
   label?: string;
   withError?: boolean;
   customControl?: boolean;

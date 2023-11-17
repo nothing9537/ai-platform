@@ -15,7 +15,14 @@ interface AIMessageCode extends AIMessageBase {
   type: 'code';
   content: string;
 }
+interface AIMessageImage extends AIMessageBase {
+  type: 'image';
+  content: string;
+}
 
 export type MessageRole = Pick<ChatCompletionMessageParam, 'role'>['role'];
 
-export type AIMessage = AIMessageText | AIMessageCode;
+export type AIMessageType =
+  AIMessageText
+  | AIMessageCode
+  | AIMessageImage;

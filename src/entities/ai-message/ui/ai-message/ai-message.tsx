@@ -1,16 +1,18 @@
 import { type FC, memo, type ReactNode } from 'react';
 
-import { AIMessage } from '../../model/types/ai-message';
 import { AIMessageText } from '../ai-message-text/ai-message-text';
-import { UserMessage } from '../user-message/user-message';
 import { AIMessageCode } from '../ai-message-code/ai-message-code';
+import { AIImageMessage } from '../ai-message-image/ai-message-image';
 
-interface AiMessageProps {
+import { UserMessage } from '../user-message/user-message';
+import { AIMessageType } from '../../model/types/ai-message';
+
+interface AIMessageProps {
   className?: string;
-  message: AIMessage;
+  message: AIMessageType;
 }
 
-const renderMessage = (message: AIMessage): ReactNode => {
+const renderMessage = (message: AIMessageType): ReactNode => {
   if (message.role === 'user') {
     return <UserMessage content={message.content} />;
   }
@@ -20,12 +22,14 @@ const renderMessage = (message: AIMessage): ReactNode => {
       return <AIMessageText content={message.content} />;
     case 'code':
       return <AIMessageCode content={message.content} />;
+    case 'image':
+      return <AIImageMessage content={message.content} />;
     default:
       return null;
   }
 };
 
-export const AiMessage: FC<AiMessageProps> = memo(({ message }) => {
+export const AIMessage: FC<AIMessageProps> = memo(({ message }) => {
   return (
     renderMessage(message)
   );

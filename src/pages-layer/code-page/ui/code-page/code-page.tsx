@@ -6,9 +6,9 @@ import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { UseFormReturn } from 'react-hook-form';
 import { Code } from 'lucide-react';
 
-import { AIRequest, AiRequestForm } from '@/features/ai-request-form';
+import { AIRequestForm, TextFormSchema, TextFormSchemaType } from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
-import { AiMessage, MessageRole } from '@/entities/ai-message';
+import { AIMessage, MessageRole } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
@@ -23,7 +23,7 @@ export const CodePage: FC<CodePageProps> = ({ className }) => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const aiRequest = useCallback(async (values: AIRequest, form: UseFormReturn<AIRequest>) => {
+  const aiRequest = useCallback(async (values: TextFormSchemaType, form: UseFormReturn<TextFormSchemaType>) => {
     setIsLoading(true);
 
     const userMessage: ChatCompletionMessageParam = {
@@ -55,20 +55,38 @@ export const CodePage: FC<CodePageProps> = ({ className }) => {
         bgColor="bg-green-700/10"
       />
       <div className="px-4 lg:px-8">
-        <AiRequestForm
-          placeholder="Simple modal window using React Hooks and TailwindCSS"
+        <AIRequestForm
           callback={aiRequest}
+          formSchema={TextFormSchema}
+          defaultValues={{ prompt: '' }}
+          components={[
+            {
+              type: 'input',
+              name: 'prompt',
+              placeholder: 'Simple modal window using React Hooks and TailwindCSS',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent',
+              formFieldProps: {
+                withError: true,
+                classNames: {
+                  formItem: 'col-span-12 lg:col-span-10',
+                  formControl: 'm-0 p-0',
+                },
+              },
+            },
+          ]}
         />
         <div className="space-y-4 mt-4">
           {isLoading && (
-            <Loading />
+            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+              <Loading />
+            </div>
           )}
           {messages.length === 0 && !isLoading && (
             <Empty label="No messages yet." />
           )}
           <div className="flex flex-col-reverse gap-y-4">
             {messages.map((message) => (
-              <AiMessage
+              <AIMessage
                 key={message.content as string}
                 message={{
                   type: 'code',
