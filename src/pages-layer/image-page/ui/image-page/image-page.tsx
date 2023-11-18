@@ -6,8 +6,8 @@ import { Code } from 'lucide-react';
 
 import {
   AIRequestForm,
-  TextWithSelectsFormSchema,
-  TextWithSelectsFormSchemaType,
+  ImageFormSchema,
+  ImageFormSchemaType,
   UserSelectAmountOptions,
   UserSelectResolutionOptions,
 } from '@/features/ai-request-form';
@@ -27,7 +27,7 @@ export const ImagePage: FC<CodePageProps> = ({ className }) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const aiRequest = useCallback(async (values: TextWithSelectsFormSchemaType) => {
+  const aiRequest = useCallback(async (values: ImageFormSchemaType) => {
     setImages([]);
     setIsLoading(true);
 
@@ -52,9 +52,9 @@ export const ImagePage: FC<CodePageProps> = ({ className }) => {
         bgColor="bg-green-700/10"
       />
       <div className="px-4 lg:px-8">
-        <AIRequestForm
+        <AIRequestForm<ImageFormSchemaType>
           callback={aiRequest}
-          formSchema={TextWithSelectsFormSchema}
+          formSchema={ImageFormSchema}
           defaultValues={{ prompt: '', amount: '1', resolution: '512x512' }}
           components={[
             {

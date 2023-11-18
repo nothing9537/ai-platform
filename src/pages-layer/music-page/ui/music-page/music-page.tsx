@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { useCallback, type FC, useState, memo } from 'react';
 import { Music } from 'lucide-react';
 
-import { AIRequestForm, TextFormSchema, TextFormSchemaType } from '@/features/ai-request-form';
+import { AIRequestForm, MusicFormSchema, MusicFormSchemaType } from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
@@ -21,7 +21,7 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
   const [music, setMusic] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const aiRequest = useCallback(async (values: TextFormSchemaType) => {
+  const aiRequest = useCallback(async (values: MusicFormSchemaType) => {
     setIsLoading(true);
     setMusic(undefined);
 
@@ -45,9 +45,9 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
         bgColor="bg-emerald-500/10"
       />
       <div className="px-4 lg:px-8">
-        <AIRequestForm
+        <AIRequestForm<MusicFormSchemaType>
           callback={aiRequest}
-          formSchema={TextFormSchema}
+          formSchema={MusicFormSchema}
           defaultValues={{ prompt: '' }}
           components={[
             {
