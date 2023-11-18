@@ -6,9 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/shared/ui/form';
 import { Button } from '@/shared/ui/button';
-import { FormFactory, FormFactoryComponent } from '@/shared/components/form-factory';
+import { FormFactory, type FormFactoryComponent } from '@/shared/components/form-factory';
 
-import { FormSchema, FromSchemaType } from '../../model/types/form-schema';
+import { FormSchema, type FromSchemaType } from '../../model/types/form-schema';
 
 type AsyncDefaultValues<T> = (payload?: unknown) => Promise<T>;
 

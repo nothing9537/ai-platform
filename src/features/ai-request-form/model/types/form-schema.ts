@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { TextFormSchema, TextWithSelectsFormSchema } from '../consts/form-schema';
+import { TextFormSchema, ImageFormSchema } from '../consts/form-schema';
 
 export type TextFormSchemaType = z.infer<typeof TextFormSchema>;
-export type TextWithSelectsFormSchemaType = z.infer<typeof TextWithSelectsFormSchema>;
+export type ImageFormSchemaType = z.infer<typeof ImageFormSchema>;
 
-export type FormSchema = typeof TextFormSchema | typeof TextWithSelectsFormSchema;
-export type FromSchemaType = TextFormSchemaType | TextWithSelectsFormSchemaType;
+export type FormSchema = typeof TextFormSchema | typeof ImageFormSchema;
+export type FromSchemaType = TextFormSchemaType | ImageFormSchemaType;
