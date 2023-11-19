@@ -2,10 +2,11 @@ import { type FC, memo, type ReactNode } from 'react';
 
 import { AIMessageText } from '../ai-message-text/ai-message-text';
 import { AIMessageCode } from '../ai-message-code/ai-message-code';
-import { AIImageMessage } from '../ai-message-image/ai-message-image';
+import { AIMessageImage } from '../ai-message-image/ai-message-image';
 
 import { UserMessage } from '../user-message/user-message';
 import { AIMessageType } from '../../model/types/ai-message';
+import { AIMessageAudio } from '../ai-message-audio/ai-message-audio';
 
 interface AIMessageProps {
   className?: string;
@@ -23,7 +24,9 @@ const renderMessage = (message: AIMessageType): ReactNode => {
     case 'code':
       return <AIMessageCode content={message.content} />;
     case 'image':
-      return <AIImageMessage content={message.content} />;
+      return <AIMessageImage content={message.content} />;
+    case 'audio':
+      return <AIMessageAudio content={message.content} />;
     default:
       return null;
   }

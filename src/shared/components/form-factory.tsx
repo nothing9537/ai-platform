@@ -6,6 +6,8 @@ import { FormControl } from '../ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { FormFieldOverviewProps, FormFieldWrapper } from './form-field-wrapper';
 
+type InputValueAs = 'number' | 'string' | 'date';
+
 interface FormFactoryComponentBase<T extends FieldValues> {
   name: Path<T>;
   type: 'input' | 'select';
@@ -17,6 +19,7 @@ interface FormFactoryInputComponent<T extends FieldValues> extends FormFactoryCo
   type: 'input'
   className?: string;
   placeholder?: string;
+  valueAs?: InputValueAs | ((value: string) => unknown);
 }
 
 interface FormFactorySelectComponent<T extends FieldValues> extends FormFactoryComponentBase<T> {
@@ -55,6 +58,23 @@ export const FormFactory = <T extends FieldValues>(props: FormFactoryProps<T>) =
                   className={component?.className}
                   disabled={formState.isSubmitting}
                   {...field}
+                  onChange={(e) => {
+                    if (component.valueAs === 'number') {
+                      const numberRegex = /^-?\d*\.?\d+$/;
+
+                      if (numberRegex.test(e.target.value)) {
+                        field.onChange(+e.target.value);
+                      } else {
+                        field.onChange(e);
+                      }
+                    } else if (component.valueAs === 'date') {
+                      field.onChange(new Date(+e.target.value));
+                    } else if (typeof component.valueAs === 'function') {
+                      field.onChange(component.valueAs(e.target.value));
+                    } else {
+                      field.onChange(e);
+                    }
+                  }}
                 />
               )}
             </FormFieldWrapper>

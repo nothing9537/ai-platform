@@ -5,11 +5,11 @@ import { Download } from 'lucide-react';
 import { Card, CardFooter } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
 
-interface AIImageMessageProps {
+interface AIMessageImageProps {
   content: string;
 }
 
-export const AIImageMessage: FC<AIImageMessageProps> = memo(({ content }) => {
+export const AIMessageImage: FC<AIMessageImageProps> = memo(({ content }) => {
   const onDownload = useCallback(() => {
     window.open(content);
   }, [content]);

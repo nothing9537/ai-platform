@@ -44,6 +44,8 @@ export async function POST(req: Request) {
         },
       },
     );
+
+    return NextResponse.json(output);
   } catch (error) {
     console.error('[MUSIC_POST]', error);
 

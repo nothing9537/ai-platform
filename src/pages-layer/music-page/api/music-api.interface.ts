@@ -1,8 +1,9 @@
-import OpenAI from 'openai';
 import { AxiosError } from 'axios';
 
-export type APIResponse = OpenAI.Chat.Completions.ChatCompletionMessage | AxiosError;
+import { MusicFormSchemaType } from '@/features/ai-request-form';
+
+export type APIResponse = string | AxiosError;
 
 export interface MusicAPIMethods {
-  sendMessage(values: { prompt: string }): Promise<APIResponse>;
+  sendMessage(values: MusicFormSchemaType): Promise<APIResponse>;
 }

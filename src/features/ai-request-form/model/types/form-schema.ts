@@ -6,4 +6,3 @@ export type ImageFormSchemaType = z.infer<typeof ImageFormSchema>;
 export type MusicFormSchemaType = z.infer<typeof MusicFormSchema>;
 
 export type FormSchema = typeof TextFormSchema | typeof ImageFormSchema | typeof MusicFormSchema;
-export type FromSchemaType = TextFormSchemaType | ImageFormSchemaType | MusicFormSchemaType;

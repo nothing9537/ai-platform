@@ -4,7 +4,14 @@ import { AxiosError } from 'axios';
 import { useCallback, type FC, useState, memo } from 'react';
 import { Music } from 'lucide-react';
 
-import { AIRequestForm, MusicFormSchema, MusicFormSchemaType } from '@/features/ai-request-form';
+import {
+  AIRequestForm,
+  MusicFormSchema,
+  type MusicFormSchemaType,
+  UserSelectModelVersionOptions,
+  UserSelectNormalizationStrategyOptions,
+  UserSelectOutputFormatOptions,
+} from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
@@ -32,6 +39,8 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
       return;
     }
 
+    setMusic(response);
+
     setIsLoading(false);
   }, []);
 
@@ -48,7 +57,15 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
         <AIRequestForm<MusicFormSchemaType>
           callback={aiRequest}
           formSchema={MusicFormSchema}
-          defaultValues={{ prompt: '' }}
+          submitButtonClassName="col-span-12 w-full"
+          defaultValues={{
+            prompt: '',
+            seed: -1,
+            duration: 10,
+            model_version: 'large',
+            normalization_strategy: 'loudness',
+            output_format: 'wav',
+          }}
           components={[
             {
               type: 'input',
@@ -56,10 +73,69 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
               placeholder: 'Epic melodic death-core.',
               className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent',
               formFieldProps: {
+                label: 'Prompt',
                 classNames: {
-                  formItem: 'col-span-12 lg:col-span-10',
+                  formItem: 'col-span-12',
                   formControl: 'm-0 p-0',
                 },
+              },
+            },
+            {
+              type: 'input',
+              name: 'duration',
+              placeholder: '25',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent',
+              valueAs: 'number',
+              formFieldProps: {
+                label: 'Duration',
+                classNames: {
+                  formItem: 'col-span-12',
+                  formControl: 'm-0 p-0',
+                },
+              },
+            },
+            {
+              type: 'input',
+              name: 'seed',
+              placeholder: '3442726813',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent',
+              valueAs: 'number',
+              formFieldProps: {
+                label: 'Seed ( -1 for random )',
+                classNames: {
+                  formItem: 'col-span-12',
+                  formControl: 'm-0 p-0',
+                },
+              },
+            },
+            {
+              type: 'select',
+              options: UserSelectModelVersionOptions,
+              name: 'model_version',
+              placeholder: 'Select model version',
+              formFieldProps: {
+                label: 'Model version',
+                classNames: { formItem: 'col-span-12' },
+              },
+            },
+            {
+              type: 'select',
+              options: UserSelectNormalizationStrategyOptions,
+              name: 'normalization_strategy',
+              placeholder: 'Select normalization strategy',
+              formFieldProps: {
+                label: 'Normalization strategy',
+                classNames: { formItem: 'col-span-12' },
+              },
+            },
+            {
+              type: 'select',
+              options: UserSelectOutputFormatOptions,
+              name: 'output_format',
+              placeholder: 'Select output format',
+              formFieldProps: {
+                label: 'Output format',
+                classNames: { formItem: 'col-span-12' },
               },
             },
           ]}
@@ -73,15 +149,17 @@ export const MusicPage: FC<ConversationPageProps> = memo(({ className }) => {
           {!music && !isLoading && (
             <Empty label="No music generated yet." />
           )}
-          <div className="flex flex-col-reverse gap-y-4">
-            <AIMessage
-              message={{
-                type: 'audio',
-                content: music || '',
-                role: 'system',
-              }}
-            />
-          </div>
+          {music && (
+            <div className="flex flex-col-reverse gap-y-4">
+              <AIMessage
+                message={{
+                  type: 'audio',
+                  content: music || '',
+                  role: 'system',
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

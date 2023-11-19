@@ -37,3 +37,48 @@ export const UserSelectResolutionOptions: UserSelectOption[] = [
     value: '1024x1024',
   },
 ];
+
+export const UserSelectModelVersionOptions: UserSelectOption[] = [
+  {
+    value: 'large',
+    label: 'Large',
+  },
+  {
+    value: 'melody',
+    label: 'Melody',
+  },
+  {
+    value: 'encode-decode',
+    label: 'Encode-Decode',
+  },
+];
+
+export const UserSelectNormalizationStrategyOptions: UserSelectOption[] = [
+  {
+    label: 'Peak',
+    value: 'peak',
+  },
+  {
+    label: 'Loudness',
+    value: 'loudness',
+  },
+  {
+    label: 'Clip',
+    value: 'clip',
+  },
+  {
+    label: 'RMS',
+    value: 'rms',
+  },
+];
+
+export const UserSelectOutputFormatOptions: UserSelectOption[] = [
+  {
+    label: 'WAV',
+    value: 'wav',
+  },
+  {
+    label: 'MP3',
+    value: 'mp3',
+  },
+];
