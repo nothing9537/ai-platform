@@ -5,6 +5,7 @@ import { useCallback, type FC, useState, memo } from 'react';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { UseFormReturn } from 'react-hook-form';
 import { MessageSquare } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { AIRequestForm, TextFormSchema, TextFormSchemaType } from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
@@ -22,6 +23,7 @@ interface ConversationPageProps {
 export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const aiRequest = useCallback(async (values: TextFormSchemaType, form: UseFormReturn<TextFormSchemaType>) => {
     setIsLoading(true);
@@ -43,7 +45,8 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
     setMessages((current) => [...current, userMessage, response]);
     setIsLoading(false);
     form.reset();
-  }, [messages]);
+    router.refresh();
+  }, [messages, router]);
 
   return (
     <section className={cn('', className)}>

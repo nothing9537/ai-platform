@@ -3,6 +3,7 @@
 import { AxiosError } from 'axios';
 import { useCallback, type FC, useState } from 'react';
 import { Code } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import {
   AIRequestForm,
@@ -26,6 +27,7 @@ interface ImagePageProps {
 export const ImagePage: FC<ImagePageProps> = ({ className }) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const aiRequest = useCallback(async (values: ImageFormSchemaType) => {
     setImages([]);
@@ -40,7 +42,8 @@ export const ImagePage: FC<ImagePageProps> = ({ className }) => {
 
     setImages(response);
     setIsLoading(false);
-  }, []);
+    router.refresh();
+  }, [router]);
 
   return (
     <section className={cn('', className)}>

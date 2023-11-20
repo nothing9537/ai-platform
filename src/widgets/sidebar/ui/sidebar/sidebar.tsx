@@ -8,11 +8,13 @@ import Link from 'next/link';
 
 import { cn } from '@/shared/lib/cn';
 
+import { FreeCounter } from '@/shared/ui/free-counter';
 import { SidebarItems } from '../../model/consts/sidebar-items';
 import { SidebarItem } from '../../model/types/sidebar-item';
 
 interface SidebarProps {
   className?: string;
+  userAPICallLimit: number;
 }
 
 const montserrat = Montserrat({
@@ -20,7 +22,7 @@ const montserrat = Montserrat({
   subsets: ['latin'],
 });
 
-export const Sidebar: FC<SidebarProps> = memo(({ className }) => {
+export const Sidebar: FC<SidebarProps> = memo(({ className, userAPICallLimit }) => {
   const pathname = usePathname();
 
   const renderSidebarItem = useCallback((item: SidebarItem) => (
@@ -58,6 +60,7 @@ export const Sidebar: FC<SidebarProps> = memo(({ className }) => {
           {SidebarItems.map(renderSidebarItem)}
         </div>
       </div>
+      <FreeCounter value={userAPICallLimit} />
     </section>
   );
 });

@@ -15,6 +15,7 @@ export const Empty: FC<EmptyProps> = memo(({ label }) => {
           alt="Empty"
           fill
           src="/empty.png"
+          className="select-none"
         />
       </div>
       <p className="text-muted-foreground text-sm text-center">

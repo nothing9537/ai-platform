@@ -3,6 +3,7 @@
 import { AxiosError } from 'axios';
 import { useCallback, type FC, useState, memo } from 'react';
 import { Music } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import {
   AIRequestForm,
@@ -27,6 +28,7 @@ interface VideoPageProps {
 export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
   const [music, setMusic] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const aiRequest = useCallback(async (values: MusicFormSchemaType) => {
     setIsLoading(true);
@@ -40,9 +42,9 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
     }
 
     setMusic(response);
-
     setIsLoading(false);
-  }, []);
+    router.refresh();
+  }, [router]);
 
   return (
     <section className={cn('', className)}>

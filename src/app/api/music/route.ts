@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import Replicate from 'replicate';
 
 import { MusicFormSchemaType } from '@/features/ai-request-form';
+import APILimit from '@/shared/lib/api-limit';
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN!,
@@ -22,6 +23,12 @@ export async function POST(req: Request) {
 
     if (!prompt) {
       return new NextResponse('Prompt is required', { status: 400 });
+    }
+
+    const freeTrial = await APILimit.checkAPILimit();
+
+    if (!freeTrial) {
+      return new NextResponse('Free trial has expired', { status: 403 });
     }
 
     const output = await replicate.run(
@@ -44,6 +51,8 @@ export async function POST(req: Request) {
         },
       },
     );
+
+    await APILimit.increaseAPILimit();
 
     return NextResponse.json(output);
   } catch (error) {

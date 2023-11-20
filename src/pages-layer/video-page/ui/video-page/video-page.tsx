@@ -3,6 +3,7 @@
 import { AxiosError } from 'axios';
 import { useCallback, type FC, useState, memo } from 'react';
 import { Video } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import {
   AIRequestForm,
@@ -25,6 +26,7 @@ interface VideoPageProps {
 export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
   const [video, setVideo] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const aiRequest = useCallback(async (values: VideoFormSchemaType) => {
     setIsLoading(true);
@@ -38,9 +40,9 @@ export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
     }
 
     setVideo(response);
-
     setIsLoading(false);
-  }, []);
+    router.refresh();
+  }, [router]);
 
   return (
     <section className={cn('', className)}>
