@@ -2,15 +2,13 @@
 
 import { AxiosError } from 'axios';
 import { useCallback, type FC, useState, memo } from 'react';
-import { Music } from 'lucide-react';
+import { Video } from 'lucide-react';
 
 import {
   AIRequestForm,
-  MusicFormSchema,
-  type MusicFormSchemaType,
-  UserSelectModelVersionOptions,
-  UserSelectNormalizationStrategyOptions,
-  UserSelectOutputFormatOptions,
+  TextFormSchema,
+  UserSelectVideoModelOptions,
+  type VideoFormSchemaType,
 } from '@/features/ai-request-form';
 import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
@@ -18,28 +16,28 @@ import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
 
-import { musicAPI } from '../../api';
+import { videoAPI } from '../../api';
 
 interface VideoPageProps {
   className?: string;
 }
 
-export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
-  const [music, setMusic] = useState<string>();
+export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
+  const [video, setVideo] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const aiRequest = useCallback(async (values: MusicFormSchemaType) => {
+  const aiRequest = useCallback(async (values: VideoFormSchemaType) => {
     setIsLoading(true);
-    setMusic(undefined);
+    setVideo(undefined);
 
-    const response = await musicAPI.sendMessage(values);
+    const response = await videoAPI.sendMessage(values);
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
       return;
     }
 
-    setMusic(response);
+    setVideo(response);
 
     setIsLoading(false);
   }, []);
@@ -47,30 +45,23 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
   return (
     <section className={cn('', className)}>
       <Heading
-        title="Music Generation"
-        description="Turn your prompt into music."
-        Icon={Music}
-        iconColor="text-emerald-500"
-        bgColor="bg-emerald-500/10"
+        title="Video Generation"
+        description="Turn your prompt into video."
+        Icon={Video}
+        iconColor="text-orange-700"
+        bgColor="bg-orange-700/10"
       />
       <div className="px-4 lg:px-8">
-        <AIRequestForm<MusicFormSchemaType>
+        <AIRequestForm<VideoFormSchemaType>
           callback={aiRequest}
-          formSchema={MusicFormSchema}
+          formSchema={TextFormSchema}
+          defaultValues={{ prompt: '', model: 'xl', negative_prompt: '' }}
           submitButtonClassName="col-span-12 w-full"
-          defaultValues={{
-            prompt: '',
-            seed: -1,
-            duration: 10,
-            model_version: 'large',
-            normalization_strategy: 'loudness',
-            output_format: 'wav',
-          }}
           components={[
             {
               type: 'input',
               name: 'prompt',
-              placeholder: 'Epic melodic death-core.',
+              placeholder: 'Clown fish swimming in a coral reef, beautiful, 8k, perfect, award winning, national geographic',
               className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
               formFieldProps: {
                 label: 'Prompt',
@@ -82,12 +73,12 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
             },
             {
               type: 'input',
-              name: 'duration',
-              placeholder: '25',
+              name: 'negative_prompt',
+              placeholder: 'Very blue, dust, noisy, washed out, ugly, distorted, broken.',
               className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
-              valueAs: 'number',
               formFieldProps: {
-                label: 'Duration',
+                label: 'Negative Prompt',
+                formFieldDescription: '(optional)',
                 classNames: {
                   formItem: 'col-span-12',
                   formControl: 'm-0 p-0',
@@ -96,13 +87,43 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
             },
             {
               type: 'input',
-              name: 'seed',
-              placeholder: '3442726813',
-              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
+              name: 'width',
+              placeholder: '1920',
               valueAs: 'number',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
               formFieldProps: {
-                label: 'Seed',
-                formFieldDescription: '( -1 for random )',
+                label: 'Width',
+                formFieldDescription: '(optional, default 576)',
+                classNames: {
+                  formItem: 'col-span-12',
+                  formControl: 'm-0 p-0',
+                },
+              },
+            },
+            {
+              type: 'input',
+              name: 'height',
+              placeholder: '1080',
+              valueAs: 'number',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
+              formFieldProps: {
+                label: 'Height',
+                formFieldDescription: '(optional, default 320)',
+                classNames: {
+                  formItem: 'col-span-12',
+                  formControl: 'm-0 p-0',
+                },
+              },
+            },
+            {
+              type: 'input',
+              name: 'fps',
+              placeholder: '24',
+              valueAs: 'number',
+              className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent border-b',
+              formFieldProps: {
+                label: 'FPS',
+                formFieldDescription: '(optional, default 8)',
                 classNames: {
                   formItem: 'col-span-12',
                   formControl: 'm-0 p-0',
@@ -111,31 +132,11 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
             },
             {
               type: 'select',
-              options: UserSelectModelVersionOptions,
-              name: 'model_version',
-              placeholder: 'Select model version',
+              options: UserSelectVideoModelOptions,
+              name: 'model',
+              placeholder: 'Select model',
               formFieldProps: {
-                label: 'Model version',
-                classNames: { formItem: 'col-span-12' },
-              },
-            },
-            {
-              type: 'select',
-              options: UserSelectNormalizationStrategyOptions,
-              name: 'normalization_strategy',
-              placeholder: 'Select normalization strategy',
-              formFieldProps: {
-                label: 'Normalization strategy',
-                classNames: { formItem: 'col-span-12' },
-              },
-            },
-            {
-              type: 'select',
-              options: UserSelectOutputFormatOptions,
-              name: 'output_format',
-              placeholder: 'Select output format',
-              formFieldProps: {
-                label: 'Output format',
+                label: 'Model',
                 classNames: { formItem: 'col-span-12' },
               },
             },
@@ -147,14 +148,14 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
               <Loading />
             </div>
           )}
-          {!music && !isLoading && (
-            <Empty label="No music generated yet." />
+          {!video && !isLoading && (
+            <Empty label="No video generated yet." />
           )}
-          {music && (
+          {video && (
             <AIMessage
               message={{
-                type: 'audio',
-                content: music || '',
+                type: 'video',
+                content: video || '',
                 role: 'system',
               }}
             />

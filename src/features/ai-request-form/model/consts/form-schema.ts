@@ -18,3 +18,13 @@ export const MusicFormSchema = z.object({
   normalization_strategy: z.string().min(1, { message: 'Normalization required' }), // * Select
   model_version: z.string().min(1, { message: 'Model version required' }), // * Select
 });
+
+export const VideoSchema = z.object({
+  prompt: z.string().min(1, { message: 'Prompt is required' }), // * Input
+  negative_prompt: z.string().optional(), // * Input
+  width: z.number().int({ message: 'Width must be integer' }).optional(), // * Input
+  height: z.number().int({ message: 'Height must be integer' }).optional(), // * Input
+  fps: z.number().int({ message: 'FPS must be integer' }).min(1, { message: 'FPS cannot be lower than 1' }).max(60, { message: 'FPS cannot be greater than 60' })
+    .optional(), // * Input
+  model: z.string().min(1, { message: 'Model is required' }), // * Select
+});

@@ -82,3 +82,22 @@ export const UserSelectOutputFormatOptions: UserSelectOption[] = [
     value: 'mp3',
   },
 ];
+
+export const UserSelectVideoModelOptions: UserSelectOption[] = [
+  {
+    label: 'XL',
+    value: 'xl',
+  },
+  {
+    label: '576W',
+    value: '576w',
+  },
+  {
+    label: 'Potat1',
+    value: 'potat1',
+  },
+  {
+    label: 'Animov512x',
+    value: 'animov-512x',
+  },
+];

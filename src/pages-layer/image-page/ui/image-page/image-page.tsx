@@ -19,11 +19,11 @@ import { cn } from '@/shared/lib/cn';
 
 import { imageAPI } from '../../api';
 
-interface CodePageProps {
+interface ImagePageProps {
   className?: string;
 }
 
-export const ImagePage: FC<CodePageProps> = ({ className }) => {
+export const ImagePage: FC<ImagePageProps> = ({ className }) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -23,6 +23,10 @@ interface AIMessageAudio extends AIMessageBase {
   type: 'audio';
   content: string;
 }
+interface AIMessageVideo extends AIMessageBase {
+  type: 'video';
+  content: string;
+}
 
 export type MessageRole = Pick<ChatCompletionMessageParam, 'role'>['role'];
 
@@ -30,4 +34,5 @@ export type AIMessageType =
   AIMessageText
   | AIMessageCode
   | AIMessageImage
-  | AIMessageAudio;
+  | AIMessageAudio
+  | AIMessageVideo;

@@ -3,10 +3,11 @@ import { type FC, memo, type ReactNode } from 'react';
 import { AIMessageText } from '../ai-message-text/ai-message-text';
 import { AIMessageCode } from '../ai-message-code/ai-message-code';
 import { AIMessageImage } from '../ai-message-image/ai-message-image';
+import { AIMessageAudio } from '../ai-message-audio/ai-message-audio';
+import { AIMessageVideo } from '../ai-message-video/ai-message-video';
 
 import { UserMessage } from '../user-message/user-message';
 import { AIMessageType } from '../../model/types/ai-message';
-import { AIMessageAudio } from '../ai-message-audio/ai-message-audio';
 
 interface AIMessageProps {
   className?: string;
@@ -27,6 +28,8 @@ const renderMessage = (message: AIMessageType): ReactNode => {
       return <AIMessageImage content={message.content} />;
     case 'audio':
       return <AIMessageAudio content={message.content} />;
+    case 'video':
+      return <AIMessageVideo content={message.content} />;
     default:
       return null;
   }
