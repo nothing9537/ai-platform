@@ -1,5 +1,13 @@
 import { Code, Image, MessageSquare, Music, Video } from 'lucide-react';
-import { ToolItem } from '../types/tool-item';
+import type { LucideIcon } from 'lucide-react';
+
+export interface ToolItem {
+  label: string;
+  icon: LucideIcon;
+  color: string;
+  bgColor: string;
+  href: string;
+}
 
 export const Tools: ToolItem[] = [
   {

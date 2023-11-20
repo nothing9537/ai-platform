@@ -66,7 +66,7 @@ export const CodePage: FC<CodePageProps> = ({ className }) => {
             {
               type: 'input',
               name: 'prompt',
-              placeholder: 'Simple modal window using React Hooks and TailwindCSS',
+              placeholder: 'Simple modal window using React Hooks and Tailwind CSS',
               className: 'border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent',
               formFieldProps: {
                 withError: true,

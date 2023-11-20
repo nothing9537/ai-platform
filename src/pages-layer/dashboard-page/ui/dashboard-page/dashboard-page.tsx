@@ -5,9 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/cn';
 import { Card } from '@/shared/ui/card';
-
-import { ToolItem } from '../../model/types/tool-item';
-import { Tools } from '../../model/consts/tools';
+import { ToolItem, Tools } from '@/shared/consts/tools';
 
 interface DashboardPageProps {
   className?: string;

@@ -1,10 +1,11 @@
 'use client';
 
-import { type FC } from 'react';
+import { useCallback, type FC } from 'react';
 import { Zap } from 'lucide-react';
 
 import { useMounted } from '../lib/hooks/use-mounted';
 import { MAX_FREE_API_CALL_COUNT } from '../consts/api-limit';
+import { useModal } from '../lib/hooks/use-modal';
 import { Card, CardContent } from './card';
 import { Progress } from './progress';
 import { Button } from './button';
@@ -15,6 +16,11 @@ interface FreeCounterProps {
 
 export const FreeCounter: FC<FreeCounterProps> = ({ value = 0 }) => {
   const mounted = useMounted();
+  const { onOpen } = useModal();
+
+  const onUpgradeClick = useCallback(() => {
+    onOpen('pro-modal');
+  }, [onOpen]);
 
   if (!mounted) {
     return null;
@@ -39,7 +45,7 @@ export const FreeCounter: FC<FreeCounterProps> = ({ value = 0 }) => {
               value={(value / MAX_FREE_API_CALL_COUNT) * 100}
             />
           </div>
-          <Button className="w-full" variant="premium">
+          <Button className="w-full" variant="premium" onClick={onUpgradeClick}>
             Upgrade
             <Zap className="w-5 h-4 ml-2 fill-white" />
           </Button>

@@ -1,13 +1,15 @@
 import OpenAI from 'openai';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+
+import { $API } from '@/shared/api';
 
 import { APIResponse, CodeAPIMethods } from './code-api.interface';
 
 export class CodeAPI implements CodeAPIMethods {
   public async sendMessage(messages: ChatCompletionMessageParam[]): Promise<APIResponse> {
     try {
-      const response = await axios.post<OpenAI.Chat.Completions.ChatCompletionMessage>('/api/code', { messages });
+      const response = await $API.post<OpenAI.Chat.Completions.ChatCompletionMessage>('/api/code', { messages });
 
       return response.data;
     } catch (error) {
