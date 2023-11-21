@@ -84,7 +84,7 @@ All AI models are taken by API from two services: OpenAI and Replicate.
 
 ## Technology Stack
 
-The main infrastructure of the application is built on a modern framework for building fullstack applications, NextJS 13. 
+The main infrastructure of the application is built on a modern framework for building fullstack applications, NextJS 14. 
 
 A complete list of the entire technology stack is given below
 
