@@ -1,7 +1,8 @@
 'use client';
 
-import { type FC, memo, useCallback } from 'react';
+import { type FC, memo, useCallback, useState } from 'react';
 import { Check, Zap } from 'lucide-react';
+import { AxiosError } from 'axios';
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
 import { useModal } from '@/shared/lib/hooks/use-modal';
@@ -10,6 +11,7 @@ import { ToolItem, Tools } from '@/shared/consts/tools';
 import { Card } from '@/shared/ui/card';
 import { cn } from '@/shared/lib/cn';
 import { Button } from '@/shared/ui/button';
+import { subscriptionAPI } from '@/shared/api/subscription-api';
 
 interface PremiumModalProps {
   className?: string;
@@ -17,8 +19,23 @@ interface PremiumModalProps {
 
 export const PremiumModal: FC<PremiumModalProps> = memo(() => {
   const { isOpen, type, onClose } = useModal();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const isModalOpen = isOpen && type === 'pro-modal';
+
+  const onSubscribe = useCallback(async () => {
+    setIsLoading(true);
+    const response = await subscriptionAPI.getSubscriptionUrl();
+
+    if (response instanceof AxiosError) {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(false);
+
+    window.location.href = response.url;
+  }, []);
 
   const renderTool = useCallback((tool: ToolItem) => (
     <Card key={tool.label} className="p-3 border-black/5 dark:border-gray-600 flex items-center justify-between">
@@ -51,7 +68,7 @@ export const PremiumModal: FC<PremiumModalProps> = memo(() => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button size="lg" variant="premium" className="w-full">
+          <Button size="lg" variant="premium" className="w-full" disabled={isLoading} onClick={onSubscribe}>
             Upgrade
             <Zap className="w-4 h-4 ml-2 fill-white" />
           </Button>

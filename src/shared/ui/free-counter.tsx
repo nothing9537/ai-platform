@@ -12,9 +12,10 @@ import { Button } from './button';
 
 interface FreeCounterProps {
   value: number;
+  isPremium?: boolean;
 }
 
-export const FreeCounter: FC<FreeCounterProps> = ({ value = 0 }) => {
+export const FreeCounter: FC<FreeCounterProps> = ({ value = 0, isPremium }) => {
   const mounted = useMounted();
   const { onOpen } = useModal();
 
@@ -23,6 +24,10 @@ export const FreeCounter: FC<FreeCounterProps> = ({ value = 0 }) => {
   }, [onOpen]);
 
   if (!mounted) {
+    return null;
+  }
+
+  if (isPremium) {
     return null;
   }
 

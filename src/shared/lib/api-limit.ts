@@ -2,10 +2,12 @@ import { auth } from '@clerk/nextjs';
 
 import { MAX_FREE_API_CALL_COUNT } from '../consts/api-limit';
 import { db } from './db';
+import { checkSubscription } from './subscription';
 
 class APILimit {
   public async checkAPILimit(): Promise<boolean> {
     const { userId } = auth();
+    const isPremium = await checkSubscription();
 
     if (!userId) {
       return false;
@@ -15,17 +17,22 @@ class APILimit {
       where: { userId },
     });
 
-    if (!userAPILimit || userAPILimit.count < MAX_FREE_API_CALL_COUNT) {
-      return true;
-    }
+    if (!userAPILimit) return true;
+    if (isPremium) return true;
+    if (userAPILimit.count < MAX_FREE_API_CALL_COUNT) return true;
 
     return false;
   }
 
   public async increaseAPILimit(): Promise<void> {
     const { userId } = auth();
+    const isPremium = await checkSubscription();
 
     if (!userId) {
+      return;
+    }
+
+    if (isPremium) {
       return;
     }
 

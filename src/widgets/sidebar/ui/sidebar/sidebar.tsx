@@ -7,14 +7,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { cn } from '@/shared/lib/cn';
-
 import { FreeCounter } from '@/shared/ui/free-counter';
+
 import { SidebarItems } from '../../model/consts/sidebar-items';
 import { SidebarItem } from '../../model/types/sidebar-item';
 
 interface SidebarProps {
   className?: string;
   userAPICallLimit: number;
+  isPremium?: boolean;
 }
 
 const montserrat = Montserrat({
@@ -22,7 +23,7 @@ const montserrat = Montserrat({
   subsets: ['latin'],
 });
 
-export const Sidebar: FC<SidebarProps> = memo(({ className, userAPICallLimit }) => {
+export const Sidebar: FC<SidebarProps> = memo(({ className, userAPICallLimit, isPremium }) => {
   const pathname = usePathname();
 
   const renderSidebarItem = useCallback((item: SidebarItem) => (
@@ -60,7 +61,10 @@ export const Sidebar: FC<SidebarProps> = memo(({ className, userAPICallLimit }) 
           {SidebarItems.map(renderSidebarItem)}
         </div>
       </div>
-      <FreeCounter value={userAPICallLimit} />
+      <FreeCounter
+        isPremium={isPremium}
+        value={userAPICallLimit}
+      />
     </section>
   );
 });
