@@ -10,7 +10,8 @@
     "lint:fix": "next lint --fix",
     "studio": "npx prisma studio",
     "db:update": "npx concurrently \"npx prisma generate\" \"npx prisma db push\"",
-    "add:component": "npx shadcn-ui@latest add"
+    "add:component": "npx shadcn-ui@latest add",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",

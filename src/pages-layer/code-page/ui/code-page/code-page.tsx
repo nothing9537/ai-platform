@@ -12,16 +12,11 @@ import { Heading } from '@/features/heading';
 import { AIMessage, MessageRole } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
-import { cn } from '@/shared/lib/cn';
 import { useToast } from '@/shared/ui/use-toast';
 
 import { codeAPI } from '../../api';
 
-interface CodePageProps {
-  className?: string;
-}
-
-export const CodePage: FC<CodePageProps> = ({ className }) => {
+export const CodePage: FC = () => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -53,7 +48,7 @@ export const CodePage: FC<CodePageProps> = ({ className }) => {
   }, [messages, router, toast]);
 
   return (
-    <section className={cn('', className)}>
+    <section>
       <Heading
         title="Code Generation"
         description="Generate code using descriptive text."

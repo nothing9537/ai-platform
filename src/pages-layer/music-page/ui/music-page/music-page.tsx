@@ -17,16 +17,11 @@ import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
-import { cn } from '@/shared/lib/cn';
 import { useToast } from '@/shared/ui/use-toast';
 
 import { musicAPI } from '../../api';
 
-interface VideoPageProps {
-  className?: string;
-}
-
-export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
+export const MusicPage: FC = memo(() => {
   const [music, setMusic] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -51,7 +46,7 @@ export const MusicPage: FC<VideoPageProps> = memo(({ className }) => {
   }, [router, toast]);
 
   return (
-    <section className={cn('', className)}>
+    <section>
       <Heading
         title="Music Generation"
         description="Turn your prompt into music."

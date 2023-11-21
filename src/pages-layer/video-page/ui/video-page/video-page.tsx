@@ -15,16 +15,11 @@ import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
-import { cn } from '@/shared/lib/cn';
 import { useToast } from '@/shared/ui/use-toast';
 
 import { videoAPI } from '../../api';
 
-interface VideoPageProps {
-  className?: string;
-}
-
-export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
+export const VideoPage: FC = memo(() => {
   const [video, setVideo] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -48,7 +43,7 @@ export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
   }, [router, toast]);
 
   return (
-    <section className={cn('', className)}>
+    <section>
       <Heading
         title="Video Generation"
         description="Turn your prompt into video."

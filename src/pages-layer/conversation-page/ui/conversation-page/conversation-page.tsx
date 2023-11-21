@@ -12,16 +12,11 @@ import { Heading } from '@/features/heading';
 import { AIMessage, MessageRole } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
-import { cn } from '@/shared/lib/cn';
 import { useToast } from '@/shared/ui/use-toast';
 
 import { conversationAPI } from '../../api';
 
-interface ConversationPageProps {
-  className?: string;
-}
-
-export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) => {
+export const ConversationPage: FC = memo(() => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -53,7 +48,7 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
   }, [messages, router, toast]);
 
   return (
-    <section className={cn('', className)}>
+    <section>
       <Heading
         title="Conversation"
         description="Our most advanced conversation model."

@@ -16,16 +16,11 @@ import { Heading } from '@/features/heading';
 import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
-import { cn } from '@/shared/lib/cn';
 import { useToast } from '@/shared/ui/use-toast';
 
 import { imageAPI } from '../../api';
 
-interface ImagePageProps {
-  className?: string;
-}
-
-export const ImagePage: FC<ImagePageProps> = ({ className }) => {
+export const ImagePage: FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -50,7 +45,7 @@ export const ImagePage: FC<ImagePageProps> = ({ className }) => {
   }, [router, toast]);
 
   return (
-    <section className={cn('', className)}>
+    <section>
       <Heading
         title="Image Generation"
         description="Generate an image using a text query."
