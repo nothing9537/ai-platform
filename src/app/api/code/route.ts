@@ -14,6 +14,8 @@ const instructions: ChatCompletionMessageParam = {
   content: 'You are code generator. You must answer markdown code, and short description of your actions. Use code comments for explanations.',
 };
 
+export const maxDuration = 120;
+
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
