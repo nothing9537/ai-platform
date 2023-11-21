@@ -17,8 +17,8 @@ class APILimit {
       where: { userId },
     });
 
-    if (!userAPILimit) return true;
     if (isPremium) return true;
+    if (!userAPILimit) return true;
     if (userAPILimit.count < MAX_FREE_API_CALL_COUNT) return true;
 
     return false;
