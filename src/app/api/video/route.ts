@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { prompt, fps, width, height, negative_prompt } = body as VideoFormSchemaType;
+    const { prompt, fps, width, height, negative_prompt, model } = body as VideoFormSchemaType;
 
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       {
         input: {
           fps,
-          model: 'xl',
+          model,
           width,
           height,
           prompt,
