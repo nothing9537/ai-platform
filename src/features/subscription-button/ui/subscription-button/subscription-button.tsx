@@ -22,8 +22,9 @@ export const SubscriptionButton: FC<SubscriptionButtonProps> = memo(({ isPremium
     const response = await subscriptionAPI.getSubscriptionUrl();
 
     if (response instanceof AxiosError) {
-      toast({ variant: 'destructive', description: 'Something went wrong when subscribing.' });
       setIsLoading(false);
+      toast({ variant: 'destructive', description: 'Something went wrong when subscribing.' });
+
       return;
     }
 

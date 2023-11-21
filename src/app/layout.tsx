@@ -3,8 +3,11 @@ import { type Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 
+import { Toaster } from '@/shared/ui/toaster';
+
 import { ThemeProvider } from './providers/theme-provider';
 import { ModalProvider } from './providers/modal-provider';
+import { CrispProvider } from './providers/crisp-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,6 +27,7 @@ export default function RootLayout({
         <head>
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         </head>
+        <CrispProvider />
         <body className={inter.className}>
           <ThemeProvider
             attribute="class"
@@ -31,8 +35,9 @@ export default function RootLayout({
             enableColorScheme
             enableSystem
           >
-            {children}
+            <Toaster />
             <ModalProvider />
+            {children}
           </ThemeProvider>
         </body>
       </html>

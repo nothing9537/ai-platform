@@ -13,6 +13,7 @@ import { AIMessage, MessageRole } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
+import { useToast } from '@/shared/ui/use-toast';
 
 import { conversationAPI } from '../../api';
 
@@ -23,6 +24,7 @@ interface ConversationPageProps {
 export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
   const router = useRouter();
 
   const aiRequest = useCallback(async (values: TextFormSchemaType, form: UseFormReturn<TextFormSchemaType>) => {
@@ -39,6 +41,8 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
+      toast({ variant: 'destructive', description: 'Something went wrong' });
+
       return;
     }
 
@@ -46,7 +50,7 @@ export const ConversationPage: FC<ConversationPageProps> = memo(({ className }) 
     setIsLoading(false);
     form.reset();
     router.refresh();
-  }, [messages, router]);
+  }, [messages, router, toast]);
 
   return (
     <section className={cn('', className)}>

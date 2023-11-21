@@ -12,6 +12,7 @@ import { Card } from '@/shared/ui/card';
 import { cn } from '@/shared/lib/cn';
 import { Button } from '@/shared/ui/button';
 import { subscriptionAPI } from '@/shared/api/subscription-api';
+import { useToast } from '@/shared/ui/use-toast';
 
 interface PremiumModalProps {
   className?: string;
@@ -20,6 +21,7 @@ interface PremiumModalProps {
 export const PremiumModal: FC<PremiumModalProps> = memo(() => {
   const { isOpen, type, onClose } = useModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const isModalOpen = isOpen && type === 'pro-modal';
 
@@ -29,13 +31,15 @@ export const PremiumModal: FC<PremiumModalProps> = memo(() => {
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
+      toast({ variant: 'destructive', description: 'Something went wrong.' });
+
       return;
     }
 
     setIsLoading(false);
 
     window.location.href = response.url;
-  }, []);
+  }, [toast]);
 
   const renderTool = useCallback((tool: ToolItem) => (
     <Card key={tool.label} className="p-3 border-black/5 dark:border-gray-600 flex items-center justify-between">

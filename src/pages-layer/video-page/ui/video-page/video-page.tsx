@@ -16,6 +16,7 @@ import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
+import { useToast } from '@/shared/ui/use-toast';
 
 import { videoAPI } from '../../api';
 
@@ -26,6 +27,7 @@ interface VideoPageProps {
 export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
   const [video, setVideo] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
   const router = useRouter();
 
   const aiRequest = useCallback(async (values: VideoFormSchemaType) => {
@@ -36,13 +38,14 @@ export const VideoPage: FC<VideoPageProps> = memo(({ className }) => {
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
+      toast({ variant: 'destructive', description: 'Something went wrong' });
       return;
     }
 
     setVideo(response);
     setIsLoading(false);
     router.refresh();
-  }, [router]);
+  }, [router, toast]);
 
   return (
     <section className={cn('', className)}>

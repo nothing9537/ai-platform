@@ -9,7 +9,7 @@ export const SettingsPage: FC = async () => {
   const isPremium = await checkSubscription();
 
   return (
-    <div>
+    <section>
       <Heading
         title="Settings"
         description="Manage account settings"
@@ -35,6 +35,6 @@ export const SettingsPage: FC = async () => {
           isPremium={isPremium}
         />
       </div>
-    </div>
+    </section>
   );
 };

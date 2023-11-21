@@ -17,6 +17,7 @@ import { AIMessage } from '@/entities/ai-message';
 import { Empty } from '@/shared/ui/empty';
 import { Loading } from '@/shared/ui/loading';
 import { cn } from '@/shared/lib/cn';
+import { useToast } from '@/shared/ui/use-toast';
 
 import { imageAPI } from '../../api';
 
@@ -27,6 +28,7 @@ interface ImagePageProps {
 export const ImagePage: FC<ImagePageProps> = ({ className }) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
   const router = useRouter();
 
   const aiRequest = useCallback(async (values: ImageFormSchemaType) => {
@@ -37,13 +39,15 @@ export const ImagePage: FC<ImagePageProps> = ({ className }) => {
 
     if (response instanceof AxiosError) {
       setIsLoading(false);
+      toast({ variant: 'destructive', description: 'Something went wrong' });
+
       return;
     }
 
     setImages(response);
     setIsLoading(false);
     router.refresh();
-  }, [router]);
+  }, [router, toast]);
 
   return (
     <section className={cn('', className)}>
