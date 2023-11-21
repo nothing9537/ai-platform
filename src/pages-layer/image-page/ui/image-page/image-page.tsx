@@ -2,7 +2,7 @@
 
 import { AxiosError } from 'axios';
 import { useCallback, type FC, useState } from 'react';
-import { Code } from 'lucide-react';
+import { Image } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -52,11 +52,11 @@ export const ImagePage: FC<ImagePageProps> = ({ className }) => {
   return (
     <section className={cn('', className)}>
       <Heading
-        title="Code Generation"
-        description="Generate code using descriptive text."
-        Icon={Code}
-        iconColor="text-green-700"
-        bgColor="bg-green-700/10"
+        title="Image Generation"
+        description="Generate an image using a text query."
+        Icon={Image}
+        iconColor="text-pink-700"
+        bgColor="bg-pink-700/10"
       />
       <div className="px-4 lg:px-8">
         <AIRequestForm<ImageFormSchemaType>
