@@ -29,6 +29,8 @@ The app supports 2 themes: Dark and Light.
 
 The user has 10 free generations after which they are offered a monthly fake subscription regulated with Stripe.
 
+For customer support, the Crisp tool was chosen, which allows you to easily integrate your service and application with a developers-friendly SDK and SITE_ID.
+
 That was the basic functionality, next let's go through each section of the app in more detail.
 
 ----
@@ -168,7 +170,5 @@ STRIPE_API_KEY=/* Stripe API Key */
 STRIPE_WEBHOOK_SECRET= /* Stripe webhook secret */
 
 NEXT_PUBLIC_APP_URL=/* Public application link */
-
-
 ```
 ----
