@@ -7,7 +7,7 @@ import { absoluteUrl } from '@/shared/lib/absolute-url';
 
 const settingsUrl = absoluteUrl('/settings');
 
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 export async function GET() {
   try {
